@@ -1,5 +1,13 @@
 from rooms import rooms
 
+help = '''
+Type 'go' then the direction you want to go
+Type 'look' then the direction you want to go
+Valid directions are: "North, South, East, West"
+Type 'quit to exit the game
+Type 'help' to see this message again
+'''
+
 def check_cancel():
     print(f"\nIf you want to cancel just press enter")
     direction = input(": ")
@@ -44,8 +52,10 @@ def check_direction(current_room, direction):
         return
     print(rooms[current_room]["directional_info"][lowered_direction])
 
-help = '''
-Type 'go' then the direction you want to go
-Type 'look' then the direction you want to go
-Valid directions are: "North, South, East, West"
-'''
+def get_direction(action):
+    if len(action) < 2:
+        direction = input("\nWhat direction do you want to choose: ")
+    else:
+        direction = action[1].lower().strip()
+    return direction
+

@@ -1,19 +1,22 @@
 template = {
-    "room_info": "",
-    "game_over": False,
-    "directional_info": {
-        "north": "",
-        "south": "",
-        "east": "",
-        "west": ""
-    },
-    "exits": {
-        "north": None,
-        "south": None,
-        "east": None,
-        "west": None
-    }
-}
+            "room_info": "",
+            "game_over": False,
+            "directional_info": {
+                "north": "",
+                "south": "",
+                "east": "",
+                "west": ""
+            },
+            "items": {
+                []
+            },
+            "exits": {
+                "north": None,
+                "south": None,
+                "east": None,
+                "west": None
+            }
+        }
 
 rooms = {
     "cell": {
@@ -24,6 +27,9 @@ rooms = {
                 "south": "A cold, stone, moss covered wall, no way you're going that way",
                 "east": "A cold, stone, moss covered wall, no way you're going that way",
                 "west": "A cold, stone, moss covered wall, no way you're going that way"
+            },
+            "items": {
+                ["test_key"]
             },
             "exits": {
                 "north": "hallway",
@@ -41,6 +47,9 @@ rooms = {
                 "east": "A wooden door, there seems to be light behind it",
                 "west": "A dark room covered in blood and in the middle is a single chair"
             },
+            "items": {
+                []
+            },
             "exits": {
                 "north": None,
                 "south": "cell",
@@ -53,13 +62,16 @@ rooms = {
             "game_over": True,
         },
         "wooden_door": {
-            "room_info": "A average wooden door, unlocked",
+            "room_info": "A average wooden door, locked",
             "game_over": False,
             "directional_info": {
                 "north": "A stone wall",
                 "south": "A stone wall",
                 "east": "The wooden door blocks the path",
                 "west": "A brightly lit hallway, you feel a sense of doom coming from that way"
+            },
+            "items": {
+                []
             },
             "exits": {
                 "north": None,
@@ -73,3 +85,4 @@ rooms = {
             "game_over": True,
         }
 }
+
