@@ -1,15 +1,23 @@
 from rooms import rooms
 
+def check_cancel():
+    print(f"\nIf you want to cancel just press enter")
+    direction = input(": ")
+    return direction
+
 def move(current_room, direction):
     lowered_direction = direction.lower()
 
     if lowered_direction not in rooms[current_room]["exits"]:
-        print(f"{lowered_direction} is not a valid direction.\nPlease type North, South, East, or West")
-        return current_room
+        print(f"\n{direction} is not a valid direction.\nPlease type North, South, East, or West")
+        new_direction = check_cancel()
+        if new_direction == "":
+            return current_room
+        return move(current_room, new_direction)
     
     path = rooms[current_room]["exits"][lowered_direction]
     if path is None:
-        print(f"You cannot go {lowered_direction}, the path is blocked")
+        print(f"\nYou cannot go {lowered_direction}, the path is blocked")
         return current_room
     new_room = path
 
@@ -18,17 +26,26 @@ def move(current_room, direction):
 def check_room(current_room):
     print(rooms[current_room]["room_info"])
     if rooms[current_room]["game_over"] is True:
-        return False
-    return True
+        return True
+    return False
 
 def check_direction(current_room, direction):
     lowered_direction = direction.lower()
     if lowered_direction not in rooms[current_room]["directional_info"]:
-        print(f"{lowered_direction} is not a valid direction.\nPlease type North, South, East, or West")
-        return
+        print(f"\n{direction} is not a valid direction.\nPlease type North, South, East, or West")
+        new_direction = check_cancel()
+        if new_direction == "":
+            return current_room
+        return check_direction(current_room, new_direction)
     
     path = rooms[current_room]["directional_info"][lowered_direction]
     if path is None:
-        print(f"Nothing of note {direction} of you")
+        print(f"\nNothing of note {direction} of you")
         return
     print(rooms[current_room]["directional_info"][lowered_direction])
+
+help = '''
+Type 'go' then the direction you want to go
+Type 'look' then the direction you want to go
+Valid directions are: "North, South, East, West"
+'''

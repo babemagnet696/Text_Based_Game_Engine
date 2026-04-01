@@ -8,8 +8,13 @@ def get_name():
         return name
     
 def get_action():
-    action = input("What do you want to do: ")
-    if action.lower() not in ["go", "look"]:
-        print("Please enter a valid action")
-        return get_action()
-    return action
+    action = input("\nWhat do you want to do: ")
+    if action.strip().lower() == "quit":
+        return
+    if action.strip().lower() == "help":
+        return action
+    full_action = action.split(" ", 1)
+    if full_action[0].lower() in ["go", "look"]:
+        return full_action
+    print("Please enter a valid action")
+    return get_action()
