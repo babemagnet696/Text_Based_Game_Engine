@@ -2,7 +2,7 @@ import os
 import time
 import copy
 from parsing import get_action
-from player import get_name, inspect_room, inspect_inventory, use_item, get_item
+from player import get_name, inspect_room, inspect_inventory, use_item, take_item
 from move import move, end_check, look_direction, help, get_direction
 from items import items
 from rooms import rooms
@@ -21,8 +21,8 @@ def main():
 
     #time.sleep(2)    
     print(f"You wake up in a dark room. It is cold and damp.")
-    print(f"There is one way you can go:\n\nNorth out of your cell")
-    print(f"Type help if you are stuck")
+    print(f"There is one way you can go: North out of your cell")
+    print(f"\nType help if you are stuck")
     
     while True:
         command, args = get_action()
@@ -57,8 +57,8 @@ def main():
         elif command == "use":
             use_item(runtime_rooms, args[0], args[1], current_room)
         
-        elif command == "get":
-            get_item(runtime_rooms, current_room, player_inventory, args[0])
+        elif command == "take":
+            take_item(runtime_rooms, current_room, player_inventory, args[0])
             
         
         if game_over is True:

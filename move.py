@@ -3,7 +3,7 @@ Type 'go' then the direction you want to go
 Type 'look' then the direction you want to go
 Type 'inspect' to inspect an item
 Type 'use' to use an item in your inventory
-Type 'get' to pick up and item
+Type 'take' to pick up and item
 Valid directions are: "North, South, East, West"
 Type 'quit to exit the game
 Type 'help' to see this message again
@@ -17,7 +17,6 @@ def check_cancel():
 
 
 def end_check(runtime_rooms, current_room):
-    print(runtime_rooms[current_room]["room_info"])
     if runtime_rooms[current_room]["game_over"] is True:
         return True
     return False
@@ -61,7 +60,7 @@ def look_direction(runtime_rooms, current_room, direction):
     print(path)
 
 def get_direction():
-    argument = input("If you want to cancel type cancel\nPlease enter a direction: ")
+    argument = input("If you want to cancel type cancel\n\nPlease enter a direction: ")
     if argument.lower() == "cancel":
         return True
     return argument

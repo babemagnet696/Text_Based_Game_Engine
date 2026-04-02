@@ -1,10 +1,18 @@
+valid_directions = [
+    "north",
+    "south",
+    "east",
+    "west"
+]
+
+
 def get_action():
     action = input("\nWhat do you want to do: ")
     if action == "":
         return get_action()
     clean_action = action.strip().lower()
 
-    parts = clean_action.split(maxsplit=2)
+    parts = clean_action.split()
     command = parts[0]
     args = []
 
@@ -39,7 +47,7 @@ def get_action():
             return (command, new_arguments)
         return (command, args)
     
-    if command == "get":
+    if command == "take":
         if len(args) < 1:
             args = get_arguments(command)
         return (command, args)
@@ -60,8 +68,8 @@ def get_arguments(command, arg=None):
             return get_inspect_arguments(arg)
         return get_inspect_arguments()
     
-    elif command == "get":
-        args.append(input("What item do you want to get: "))
+    elif command == "take":
+        args.append(input("What item do you want to take: "))
         if args == ['']:
             return get_arguments(command)
         
