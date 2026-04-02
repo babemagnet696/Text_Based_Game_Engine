@@ -5,7 +5,7 @@ valid_directions = [
     "west"
 ]
 
-def clean_and_seperate_action(action):
+def clean_and_separate_action(action):
     clean_action = action.strip().lower()
 
     parts = clean_action.split()
@@ -22,7 +22,7 @@ def get_action():
     if action == "":
         return get_action()
 
-    command, args = clean_and_seperate_action(action)
+    command, args = clean_and_separate_action(action)
 
     if command == "quit":
         return (command, args)
@@ -31,9 +31,7 @@ def get_action():
         return (command, args)
 
     if command in ["go", "look"]:
-        if len(args) < 1:
-            args = get_arguments(command)
-        return (command, args)
+        return check_direction_command(command, args)
     
     if command == "inspect":
         return check_inspect_command(command, args)
@@ -47,38 +45,32 @@ def get_action():
     print("Please enter a valid action")
     return get_action()
 
-
-
 def get_arguments(command, arg=None):
     args = []
 
     if command in ["go", "look"]:
-        args.append(input("Please enter a direction: "))
-        if args == ['']:
-            return get_arguments(command)
+        return get_direction_arguments()
         
     elif command == "inspect":
-        if arg:
-            return get_inspect_arguments(arg)
-        return get_inspect_arguments()
+        return get_inspect_arguments(arg)
     
     elif command == "take":
-        args.append(input("What item do you want to take: "))
-        if args == ['']:
-            return get_arguments(command)
+        return get_take_arguments()
         
     elif command == "use":
         return get_use_arguments(arg)
     
     return args
 
-
-
 def normalize_argument(arg=None):
     if arg:
         return arg.lower().strip()
     return None
 
+def check_direction_command(command, args):
+    if len(args) < 1:
+        args = get_arguments(command)
+    return (command, args)
 
 def check_use_command(command, args):
         if len(args) == 0:
@@ -119,6 +111,13 @@ def check_inspect_command(command, args):
     
     return (command, args)
 
+def get_direction_arguments():
+    args = []
+    args.append(input("Please enter a direction: "))
+    if args == ['']:
+        return get_direction_arguments()
+    return args
+
 def get_use_arguments(arg=None):
     args = []
     if arg:
@@ -132,6 +131,13 @@ def get_use_arguments(arg=None):
     args.append(input(f"What do you want to use {item} on: "))
     if args == [item, '']:
         return get_use_arguments(item)
+    return args
+
+def get_take_arguments():
+    args = []
+    args.append(input("What item do you want to take: "))
+    if args == ['']:
+        return get_take_arguments()
     return args
 
 def get_inspect_arguments(arg=None):
