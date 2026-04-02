@@ -1,8 +1,10 @@
 import os
 import time
 import copy
-from player import get_name, get_action, inspect, use_item, get_item
+from parsing import get_action
+from player import get_name, inspect_room, inspect_inventory, use_item, get_item
 from move import move, end_check, look_direction, help, get_direction
+from items import items
 from rooms import rooms
 
 
@@ -44,11 +46,13 @@ def main():
             look_direction(runtime_rooms, current_room, direction)
 
         elif command == "inspect":
-            continue
-            if args == []:
-                inspect(runtime_rooms[current_room]["items"])
-            else:
-                inspect(runtime_rooms[current_room]["items"], args[0])
+            if args[0] == "room":
+                inspect_room(runtime_rooms[current_room]["items"])
+            if args[0] == "inventory":
+                if args[1] == "":
+                    inspect_inventory(player_inventory)
+                else:
+                    inspect_inventory(player_inventory, items, args[1])
         
         elif command == "use":
             use_item(runtime_rooms, args[0], args[1], current_room)
