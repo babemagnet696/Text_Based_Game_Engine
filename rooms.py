@@ -42,7 +42,7 @@ rooms = {
                 "east": "A cold, stone, moss covered wall, no way you're going that way",
                 "west": "A cold, stone, moss covered wall, no way you're going that way"
             },
-            "items":["test_key"],
+            "items":["test key"],
             "exits": {
                 "north": {
                     "room": "hallway",
@@ -92,7 +92,7 @@ rooms = {
                 "east": {
                     "room": "escape",
                     "locked": True,
-                    "key": "test_key"
+                    "key": "test key"
                 },
                 "west": {
                     "room": "bloodied_room",

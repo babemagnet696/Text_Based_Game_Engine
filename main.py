@@ -55,7 +55,12 @@ def main():
                     inspect_inventory(player_inventory, items, args[1])
         
         elif command == "use":
-            use_item(runtime_rooms, args[0], args[1], current_room)
+            item_to_use = args[0]
+            direction = args[1]
+            if args[0] in player_inventory:
+                use_item(runtime_rooms, item_to_use, direction, current_room)
+            else:
+                print(f"{item_to_use} not found in inventory")
         
         elif command == "take":
             take_item(runtime_rooms, current_room, player_inventory, args[0])

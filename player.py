@@ -14,11 +14,13 @@ def inspect_room(room_item_list, target=None):
     if room_item_list == []:
         print("\nThere is nothing here")
         return
+    
     for item in room_item_list:
         if target is None:
             print(f"{item}")
         elif target == item:
             return True
+        
     if target:
         print(f"\n{target} not found")
 
@@ -45,13 +47,13 @@ def inspect_inventory(inventory, items_list=None, target=None):
 
 
 def use_key(runtime_rooms, key, target, current_room):
-    print(items[key.lower()]["opens"])
     direction_to_unlock = runtime_rooms[current_room]["exits"][target]
-    print(direction_to_unlock["room"])
+
     if items[key.lower()]["opens"] == direction_to_unlock["room"]:
         direction_to_unlock["locked"] = False
         print(f"{direction_to_unlock["room"]} has been unlocked")
         return True
+    
     print(f"Incorrect key")
     return False
 
@@ -60,12 +62,14 @@ def use_item(runtime_rooms, item, target_object, current_room):
     if items[item.lower()]["type"] == "key":
         if use_key(runtime_rooms, item, target_object, current_room) is True:
             return True
+        
     print(f"Could not use {item}")
 
 def take_item(runtime_rooms, current_room, player_inventory, target_item):
     if inspect_room(runtime_rooms[current_room]["items"], target_item) is True:
         player_inventory.append(target_item)
         runtime_rooms[current_room]["items"].remove(target_item)
+        print(f"{target_item} put in inventory")
 
 
 

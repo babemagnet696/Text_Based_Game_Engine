@@ -5,11 +5,7 @@ valid_directions = [
     "west"
 ]
 
-
-def get_action():
-    action = input("\nWhat do you want to do: ")
-    if action == "":
-        return get_action()
+def clean_and_seperate_action(action):
     clean_action = action.strip().lower()
 
     parts = clean_action.split()
@@ -19,8 +15,18 @@ def get_action():
     if len(parts) > 1:
         args.extend(parts[1:])
 
+    return (command, args)
+
+def get_action():
+    action = input("\nWhat do you want to do: ")
+    if action == "":
+        return get_action()
+
+    command, args = clean_and_seperate_action(action)
+
     if command == "quit":
         return (command, args)
+    
     if command == "help":
         return (command, args)
 
@@ -30,30 +36,18 @@ def get_action():
         return (command, args)
     
     if command == "inspect":
-        if len(args) == 0:
-            new_args = get_arguments(command)
-            return (command, new_args)
-        elif len(args) == 1:
-            new_args = get_arguments(command, args[0])
-            return (command, new_args)
-        return (command, args)
-
+        return check_inspect_command(command, args)
+    
     if command == "use":
-        if len(args) == 0:
-            new_arguments = get_arguments(command)
-            return (command, new_arguments)
-        elif len(args) == 1:
-            new_arguments = get_arguments(command, args[0])
-            return (command, new_arguments)
-        return (command, args)
+        return check_use_command(command, args)
     
     if command == "take":
-        if len(args) < 1:
-            args = get_arguments(command)
-        return (command, args)
+        return check_take_command(command, args)
         
     print("Please enter a valid action")
     return get_action()
+
+
 
 def get_arguments(command, arg=None):
     args = []
@@ -74,18 +68,70 @@ def get_arguments(command, arg=None):
             return get_arguments(command)
         
     elif command == "use":
-        if arg:
-            item = arg
-            args.append(item)
-        else:
-            item = input("What item do you want to use:  ")
-            if item == "":
-                return get_arguments(command)
-            args.append(item)
-        args.append(input(f"What do you want to use {item} on: "))
-        if args == [item, '']:
-            return get_arguments(command, item)
+        return get_use_arguments(arg)
     
+    return args
+
+
+
+def normalize_argument(arg=None):
+    if arg:
+        return arg.lower().strip()
+    return None
+
+
+def check_use_command(command, args):
+        if len(args) == 0:
+            new_args = get_arguments(command)
+            return (command, new_args)
+        elif len(args) == 1:
+            new_args = get_arguments(command, args[0])
+            return (command, new_args)
+        elif len(args) > 2:
+            if args[-1] in valid_directions:
+                temp = " ".join(args)
+                new_args = temp.rsplit(maxsplit=1)
+                return (command, new_args)
+        else:
+            temp = " ".join(args)
+            item_to_use = [temp]
+            new_args = get_arguments(command, item_to_use[0])
+            return (command, new_args)
+
+        return (command, args)
+
+def check_take_command(command, args):
+    if len(args) < 1:
+        args = get_arguments(command)
+    if len(args) >= 2:
+        temp = " ".join(args)
+        new_args = [temp]
+        return (command, new_args)
+    return (command, args)
+
+def check_inspect_command(command, args):
+    if len(args) == 0:
+        new_args = get_arguments(command)
+        return (command, new_args)
+    elif len(args) == 1:
+        new_args = get_arguments(command, args[0])
+        return (command, new_args)
+    
+    return (command, args)
+
+def get_use_arguments(arg=None):
+    args = []
+    if arg:
+        item = arg
+        args.append(item)
+    else:
+        item = input("What item do you want to use:  ")
+        if item == "":
+            return get_use_arguments()
+        args.append(item)
+    args.append(input(f"What do you want to use {item} on: "))
+    if args == [item, '']:
+        return get_use_arguments(item)
     return args
 
 def get_inspect_arguments(arg=None):
@@ -110,12 +156,3 @@ def get_inspect_arguments(arg=None):
     args.append(item_to_inspect)
     
     return args
-
-
-def normalize_argument(arg=None):
-    if arg:
-        return arg.lower().strip()
-    return None
-
-
-    

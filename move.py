@@ -40,6 +40,7 @@ def move(runtime_rooms, current_room, direction=None):
         return current_room
     
     new_room = path["room"]
+    print(runtime_rooms[new_room]["room_info"])
     return new_room
 
 
