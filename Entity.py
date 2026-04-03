@@ -1,7 +1,8 @@
 import math
+from dice_roller import d20
 
 class Entity:
-    def __init__(self, name, level, constitution, strength, dexterity, intelligence, wisdom, charisma):
+    def __init__(self, name, level, constitution, strength, dexterity, intelligence, wisdom, charisma, weapon=None, advantage=False, disadvantage=False):
         self.name = name
         self.level = level
         base_health = 20
@@ -22,6 +23,9 @@ class Entity:
 
         self.max_hp = base_health + (self.con * 3) + (self.level * 4)
         self.current_hp = self.max_hp
+        self.temp_ac_bonus = 0
+        self.advantage = advantage
+        self.disadvantage = disadvantage
 
     def is_alive(self):
         return self.current_hp > 0
@@ -44,10 +48,17 @@ class Entity:
     
     # Armor and skill dependent
     def armor_class(self, armor_modifier=0):
-        return  10 + self.get_modifier(self.dex) + armor_modifier
+        ac = 10 + self.get_modifier(self.dex) + armor_modifier + self.temp_ac_bonus
+        self.temp_ac_bonus = 0
+        return ac
 
-    def unarmed_attack(self):
-        return 1 + self.get_modifier(self.str)
+    def unarmed_attack(self, enemy):
+        damage = 1 + self.get_modifier(self.str)
+        enemy.take_damage(damage)
+    
+    def unarmed_roll(self):
+        attack_roll = d20(bonus=self.get_modifier(self.dex)).roll_dice
+        return attack_roll
     
 class Fighter(Entity):
     def __init__(self, name, level):
@@ -61,6 +72,14 @@ class Fighter(Entity):
             10,
             10
         )
+
+    def guard(self):
+        self.temp_ac_bonus = self.get_modifier(self.str)
+
+    def charge(self, enemy):
+        enemy.take_damae(5)
+        self.advantage = True
+
 
 class Wizard(Entity):
     def __init__(self, name, level):
@@ -87,6 +106,10 @@ class Monk(Entity):
             14,
             10
         )
+
+    def unarmed_attack(self, roll, enemy):
+        damage = roll + self.get_modifier(self.dex)
+        enemy.take_damage(damage)
 
 class Ranger(Entity):
     def __init__(self, name, level):

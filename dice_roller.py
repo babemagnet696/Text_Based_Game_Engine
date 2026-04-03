@@ -1,7 +1,7 @@
 import random
 
 class DiceRoller:
-    def __init__(self, num_of_sides, num_of_dice):
+    def __init__(self, num_of_sides, num_of_dice=1):
         self.num_of_sides = int(num_of_sides)
         self.num_of_dice = int(num_of_dice)
         self.rolls = []
@@ -15,7 +15,7 @@ class DiceRoller:
         return self.total
     
 class d20(DiceRoller):
-    def __init__(self, num_of_dice, bonus=0, critical_chance_modifier=0):
+    def __init__(self, num_of_dice=1, bonus=0, critical_chance_modifier=0):
         super().__init__(20, num_of_dice)
         self.modifier = critical_chance_modifier
         self.bonus = bonus
@@ -26,13 +26,11 @@ class d20(DiceRoller):
 
         if total in range((20-self.modifier), 21):
             print("Critical Success!")
-            total += self.bonus
-            return total
+            return 20
         
         elif total == 1:
             print("Critical Fail!")
-            total += self.bonus
-            return total
+            return 1
         
         total += self.bonus
         return total
@@ -45,11 +43,11 @@ class d20(DiceRoller):
 
         if num_chosen in range((20-self.modifier), 21):
             print(f"Advantage: {roll1} vs {roll2} → Critical Success!")
-            return num_chosen
+            return 20
         
         elif num_chosen == 1:
             print(f"Advantage: {roll1} vs {roll2} → Critical Fail!")
-            return num_chosen
+            return 1
         
         num_chosen += self.bonus
         print(f"Advantage: {roll1} vs {roll2} → {max(roll1, roll2)} + {self.bonus}")
