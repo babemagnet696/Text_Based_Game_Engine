@@ -57,7 +57,7 @@ class Entity:
         enemy.take_damage(damage)
     
     def unarmed_roll(self):
-        attack_roll = d20(bonus=self.get_modifier(self.dex)).roll_dice
+        attack_roll = d20(bonus=self.get_modifier(self.dex)).roll_dice()
         return attack_roll
     
 class Fighter(Entity):
