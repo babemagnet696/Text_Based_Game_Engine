@@ -1,3 +1,5 @@
+from parsing import normalize_argument, get_direction_arguments, valid_directions
+
 help = '''
 1. Type 'go' then the direction you want to go
 2. Type 'look' then the direction you want to go
@@ -10,30 +12,21 @@ help = '''
 '''
 
 
-def check_cancel():
-    print(f"\nIf you want to cancel just press enter")
-    direction = input(": ")
-    return direction
-
-
 def end_check(runtime_rooms, current_room):
     if runtime_rooms[current_room]["game_over"] is True:
         return True
     return False
 
 def move(runtime_rooms, current_room, direction=None):
-    lowered_direction = direction.lower()
 
-    if lowered_direction not in runtime_rooms[current_room]["exits"]:
+    if direction not in runtime_rooms[current_room]["exits"]:
         print(f"\n{direction} is not a valid direction.\nPlease type North, South, East, or West")
-        new_direction = get_direction()
-        if new_direction == True:
-            return current_room
+        new_direction = get_direction_arguments()[0]
         return move(runtime_rooms, current_room, new_direction)
     
-    path = runtime_rooms[current_room]["exits"][lowered_direction]
+    path = runtime_rooms[current_room]["exits"][direction]
     if path["room"] is None:
-        print(f"\nYou cannot go {lowered_direction}, the path is blocked")
+        print(f"\nYou cannot go {direction.title()}, the path is blocked")
         return current_room
     if path["locked"] is True:
         print(f"The way to {path["room"]} is blocked by a locked door")
@@ -46,24 +39,18 @@ def move(runtime_rooms, current_room, direction=None):
 
 
 def look_direction(runtime_rooms, current_room, direction):
-    lowered_direction = direction.lower()
-    if lowered_direction not in runtime_rooms[current_room]["directional_info"]:
+
+    if direction not in runtime_rooms[current_room]["directional_info"]:
         print(f"\n{direction} is not a valid direction.\nPlease type North, South, East, or West")
-        new_direction = get_direction()
-        if new_direction == True:
-            return current_room
+        new_direction = get_direction_arguments()[0]
         return look_direction(runtime_rooms, current_room, new_direction)
     
-    path = runtime_rooms[current_room]["directional_info"][lowered_direction]
+    path = runtime_rooms[current_room]["directional_info"][direction]
     if path is None:
-        print(f"\nNothing of note {direction} of you")
+        print(f"\nNothing of note {direction.title()} of you")
         return
     print(path)
 
-def get_direction():
-    argument = input("If you want to cancel type cancel\n\nPlease enter a direction: ")
-    if argument.lower() == "cancel":
-        return True
-    return argument
+
     
 

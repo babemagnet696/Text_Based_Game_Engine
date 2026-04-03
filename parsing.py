@@ -33,7 +33,7 @@ def get_action():
     if command == "help":
         return (command, args)
 
-    if command in ["go", "look"]:
+    if command in ["go", "look", "move"]:
         return check_direction_command(command, args)
     
     if command == "inspect":
@@ -53,17 +53,20 @@ def get_action():
 def get_arguments(command, arg=None):
     args = []
 
-    if command in ["go", "look"]:
-        return get_direction_arguments()
+    print("\nType 'cancel' at any time to cancel the action\n")
+
+    if command in ["go", "look", "move"]:
+        return(get_direction_arguments())
         
     elif command == "inspect":
-        return get_inspect_arguments(arg)
+        return(get_inspect_arguments(arg))
     
     elif command == "take":
-        return get_take_arguments()
+        return(get_take_arguments())
         
     elif command == "use":
-        return get_use_arguments(arg)
+        return(get_use_arguments(arg))
+
     
     return args
 
@@ -129,31 +132,53 @@ def check_inspect_command(command, args):
 ### Move and player functions require a certain amount of arguments so the game does not crash
 def get_direction_arguments():
     args = []
-    args.append(input("Please enter a direction: "))
-    if args == ['']:
+    arg = input("Please enter a direction: ")
+    clean_arg = normalize_argument(arg)
+
+    if clean_arg == "cancel":
+        return "cancel"
+    if clean_arg not in valid_directions:
         return get_direction_arguments()
+    
+    args.append(clean_arg)
     return args
 
 def get_use_arguments(arg=None):
     args = []
+    clean_arg = normalize_argument(arg)
+    
     if arg:
-        item = arg
+        item = clean_arg
         args.append(item)
+
     else:
         item = input("What item do you want to use:  ")
+        if check_cancel(item) is True:
+            return "cancel"
         if item == "":
             return get_use_arguments()
         args.append(item)
-    args.append(input(f"What do you want to use {item} on: "))
-    if args == [item, '']:
+    
+    target = input(f"What do you want to use {item} on: ")
+    clean_target = normalize_argument(target)
+
+    if check_cancel(clean_target) is True:
+        return "cancel"
+    if clean_target == '':
         return get_use_arguments(item)
     return args
 
 def get_take_arguments():
     args = []
-    args.append(input("What item do you want to take: "))
-    if args == ['']:
+    item = input("What item do you want to take: ")
+    clean_item = normalize_argument(item)
+
+    if check_cancel(clean_item) is True:
+        return "cancel"
+    if clean_item == "":
         return get_take_arguments()
+    
+    args.append(clean_item)
     return args
 
 def get_inspect_arguments(arg=None):
@@ -161,23 +186,28 @@ def get_inspect_arguments(arg=None):
     clean_text = normalize_argument(arg)
 
     if not clean_text or clean_text not in ["room", "inventory"]:
-        print("\nType cancel to cancel the action")
+        
         list_to_inspect = input("Do you want to inpsect the room or your inventory: ")
-        if list_to_inspect == "cancel":
+        if check_cancel(clean_text) is True:
             return "cancel"
         return get_inspect_arguments(list_to_inspect.lower())
     
     if clean_text == "room":
         args.append(clean_text)
         return args
-    
     if clean_text == "inventory":
         args.append(clean_text)
 
     item_to_inspect = input("Press enter to view inventory or type an item to inspect: ")
-    args.append(item_to_inspect)
+    clean_item_to_inspect = normalize_argument(item_to_inspect)
+
+    if check_cancel(clean_item_to_inspect) is True:
+            return "cancel"
     
+    args.append(item_to_inspect)
     return args
 
-def check_cancel():
-    print("Type cancel to cancel the action")
+def check_cancel(input_string):
+    if input_string == "cancel":
+        return True
+    return False

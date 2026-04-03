@@ -32,10 +32,13 @@ def main():
             print(help)
             continue
 
+        if "cancel" in args:
+            continue
 
+        os.system('cls' if os.name == 'nt' else 'clear')
        
         
-        if command == "go":
+        if command in ["go", "move"]:
             direction = args[0]
             current_room = move(runtime_rooms, current_room, direction)
             game_over = end_check(runtime_rooms, current_room)
@@ -48,7 +51,7 @@ def main():
         elif command == "inspect":
             if args[0] == "room":
                 inspect_room(runtime_rooms[current_room]["items"])
-            if args[0] == "inventory":
+            elif args[0] == "inventory":
                 if args[1] == "":
                     inspect_inventory(player_inventory)
                 else:
