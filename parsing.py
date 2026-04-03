@@ -17,6 +17,9 @@ def clean_and_separate_action(action):
 
     return (command, args)
 
+
+### This is just to get the initial command from the player
+### Then wrapps all other functions into this
 def get_action():
     action = input("\nWhat do you want to do: ")
     if action == "":
@@ -45,6 +48,8 @@ def get_action():
     print("Please enter a valid action")
     return get_action()
 
+
+### This is another wrapper but for the get_arguments functions
 def get_arguments(command, arg=None):
     args = []
 
@@ -62,11 +67,18 @@ def get_arguments(command, arg=None):
     
     return args
 
+
+
+### quickly lowers and strips the strings
 def normalize_argument(arg=None):
     if arg:
         return arg.lower().strip()
     return None
 
+
+### Check functions
+### These functions check how many arguments the action given have
+### Different commands take different actions and this setup determines how many arguments to grab
 def check_direction_command(command, args):
     if len(args) < 1:
         args = get_arguments(command)
@@ -111,6 +123,10 @@ def check_inspect_command(command, args):
     
     return (command, args)
 
+
+### Get arguments functions
+### If the check functions determine more arguments are needed these functions grab more
+### Move and player functions require a certain amount of arguments so the game does not crash
 def get_direction_arguments():
     args = []
     args.append(input("Please enter a direction: "))
@@ -145,9 +161,9 @@ def get_inspect_arguments(arg=None):
     clean_text = normalize_argument(arg)
 
     if not clean_text or clean_text not in ["room", "inventory"]:
-        print("\nPress enter to cancel")
+        print("\nType cancel to cancel the action")
         list_to_inspect = input("Do you want to inpsect the room or your inventory: ")
-        if list_to_inspect == "":
+        if list_to_inspect == "cancel":
             return "cancel"
         return get_inspect_arguments(list_to_inspect.lower())
     
@@ -162,3 +178,6 @@ def get_inspect_arguments(arg=None):
     args.append(item_to_inspect)
     
     return args
+
+def check_cancel():
+    print("Type cancel to cancel the action")

@@ -1,12 +1,12 @@
 help = '''
-Type 'go' then the direction you want to go
-Type 'look' then the direction you want to go
-Type 'inspect' to inspect an item
-Type 'use' to use an item in your inventory
-Type 'take' to pick up and item
-Valid directions are: "North, South, East, West"
-Type 'quit to exit the game
-Type 'help' to see this message again
+1. Type 'go' then the direction you want to go
+2. Type 'look' then the direction you want to go
+3. Type 'inspect' to inspect an item
+4. Type 'use' to use an item in your inventory
+5. Type 'take' to pick up and item
+6. Valid directions are: "North, South, East, West"
+7. Type 'quit to exit the game
+8. Type 'help' to see this message again
 '''
 
 

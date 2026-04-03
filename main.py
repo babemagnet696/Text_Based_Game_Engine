@@ -53,6 +53,8 @@ def main():
                     inspect_inventory(player_inventory)
                 else:
                     inspect_inventory(player_inventory, items, args[1])
+            else:
+                inspect_inventory(player_inventory, items, " ".join(args))
         
         elif command == "use":
             item_to_use = args[0]
