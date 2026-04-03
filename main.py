@@ -3,7 +3,7 @@ import time
 import copy
 from parsing import get_action
 from player import get_name, inspect_room, inspect_inventory, use_item, take_item
-from move import move, end_check, look_direction, help, get_direction
+from move import move, end_check, look_direction, help
 from items import items
 from rooms import rooms
 
