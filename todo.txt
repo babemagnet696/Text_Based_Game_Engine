@@ -1,14 +1,3 @@
-Parser:
-    Make all parser functions have cancel option
-
-move:
-    remove all cancel related questions
-    remove all checks for the right type of argument
-
-player:
-    remove all cancel related questions
-    remove all checks for the right type of argument
-
 whole:
     add enemies
     add combat

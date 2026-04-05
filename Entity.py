@@ -2,7 +2,7 @@ import math
 from dice_roller import d20
 
 class Entity:
-    def __init__(self, name, level, constitution, strength, dexterity, intelligence, wisdom, charisma, weapon=None, advantage=False, disadvantage=False):
+    def __init__(self, name, level, constitution, strength, dexterity, intelligence, wisdom, charisma, weapon=None, advantage=False, disadvantage=False, abilities=None):
         self.name = name
         self.level = level
         base_health = 20
@@ -26,6 +26,7 @@ class Entity:
         self.temp_ac_bonus = 0
         self.advantage = advantage
         self.disadvantage = disadvantage
+        self.abilities = abilities or []
 
     def is_alive(self):
         return self.current_hp > 0
@@ -51,17 +52,10 @@ class Entity:
         ac = 10 + self.get_modifier(self.dex) + armor_modifier + self.temp_ac_bonus
         self.temp_ac_bonus = 0
         return ac
-
-    def unarmed_attack(self, enemy):
-        damage = 1 + self.get_modifier(self.str)
-        enemy.take_damage(damage)
-    
-    def unarmed_roll(self):
-        attack_roll = d20(bonus=self.get_modifier(self.dex)).roll_dice()
-        return attack_roll
     
 class Fighter(Entity):
     def __init__(self, name, level):
+        abilities = ["charge", "guard", "strike", "heavy strike"]
         super().__init__(
             name,
             level,
@@ -73,16 +67,10 @@ class Fighter(Entity):
             10
         )
 
-    def guard(self):
-        self.temp_ac_bonus = self.get_modifier(self.str)
-
-    def charge(self, enemy):
-        enemy.take_damae(5)
-        self.advantage = True
-
 
 class Wizard(Entity):
     def __init__(self, name, level):
+        abilities = ["fireball", "magic missle", "focus", "curse"]
         super().__init__(
             name,
             level,
@@ -96,6 +84,7 @@ class Wizard(Entity):
 
 class Monk(Entity):
     def __init__(self, name, level):
+        abilities = "flurry of blows", "agile strike", "focus", "palm strike"
         super().__init__(
             name,
             level,
@@ -107,12 +96,10 @@ class Monk(Entity):
             10
         )
 
-    def unarmed_attack(self, roll, enemy):
-        damage = roll + self.get_modifier(self.dex)
-        enemy.take_damage(damage)
 
 class Ranger(Entity):
     def __init__(self, name, level):
+        abilities = ["stab", "quick shot", "hunters mark", "double shot"]
         super().__init__(
             name,
             level,
@@ -126,6 +113,7 @@ class Ranger(Entity):
 
 class Warlock(Entity):
     def __init__(self, name, level):
+        abilities = ["eldritch blash", "hex", "life drain", "dark surge"]
         super().__init__(
             name,
             level,
