@@ -15,9 +15,9 @@ class DiceRoller:
         return self.total
     
 class d20(DiceRoller):
-    def __init__(self, num_of_dice=1, bonus=0, critical_chance_modifier=0):
+    def __init__(self, num_of_dice=1, bonus=0, crit_chance_modifier=0):
         super().__init__(20, num_of_dice)
-        self.modifier = critical_chance_modifier
+        self.modifier = crit_chance_modifier
         self.bonus = bonus
 
     def roll_dice(self):
@@ -26,14 +26,14 @@ class d20(DiceRoller):
 
         if total in range((20-self.modifier), 21):
             print("Critical Success!")
-            return 20
+            return (True, total)
         
         elif total == 1:
             print("Critical Fail!")
-            return 1
+            return (True, total)
         
         total += self.bonus
-        return total
+        return (False, total)
     
     def advantage(self):
         roll1 = random.randint(1, self.num_of_sides)
@@ -43,16 +43,16 @@ class d20(DiceRoller):
 
         if num_chosen in range((20-self.modifier), 21):
             print(f"Advantage: {roll1} vs {roll2} → Critical Success!")
-            return 20
+            return (True, num_chosen)
         
         elif num_chosen == 1:
             print(f"Advantage: {roll1} vs {roll2} → Critical Fail!")
-            return 1
+            return (True, num_chosen)
         
         num_chosen += self.bonus
         print(f"Advantage: {roll1} vs {roll2} → {max(roll1, roll2)} + {self.bonus}")
         print(f"Total: {num_chosen}")
-        return num_chosen
+        return (False, num_chosen)
     
     def disadvantage(self):
         roll1 = random.randint(1, self.num_of_sides)
@@ -62,16 +62,16 @@ class d20(DiceRoller):
 
         if num_chosen in range((20-self.modifier), 21):
             print(f"Disadvantage: {roll1} vs {roll2} → Critical Success!")
-            return num_chosen
+            return (True, num_chosen)
         
         elif num_chosen == 1:
             print(f"Disadvantage: {roll1} vs {roll2} → Critical Fail!")
-            return num_chosen
+            return (True, num_chosen)
         
         num_chosen += self.bonus
         print(f"Disadvantage: {roll1} vs {roll2} → {min(roll1, roll2)} + {self.bonus}" )
         print(f"Total: {num_chosen}")
-        return num_chosen
+        return (False, num_chosen)
 
 class d12(DiceRoller):
     def __init__(self, num_of_dice, bonus=0):

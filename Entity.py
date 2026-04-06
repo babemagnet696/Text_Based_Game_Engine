@@ -1,5 +1,5 @@
 import math
-from dice_roller import d20
+from abilities import Ability, StatusEffect
 
 class Entity:
     def __init__(self, name, level, constitution, strength, dexterity, intelligence, wisdom, charisma, weapon=None, advantage=False, disadvantage=False, abilities=None):
@@ -27,6 +27,7 @@ class Entity:
         self.advantage = advantage
         self.disadvantage = disadvantage
         self.abilities = abilities or []
+        self.armor_modifier = 0
 
     def is_alive(self):
         return self.current_hp > 0
@@ -37,9 +38,8 @@ class Entity:
     def take_damage(self, damage):
         self.current_hp -= damage
         print(f"{self.name} took {damage} damage!")
-        if self.current_hp < 0:
+        if self.is_alive() is True:
             self.current_hp = 0
-        return self.is_alive()
     
     def heal(self, amount):
         self.current_hp += amount
@@ -48,11 +48,12 @@ class Entity:
         print(f"{self.name} healed for {amount}: current hp is {self.current_hp}")
     
     # Armor and skill dependent
-    def armor_class(self, armor_modifier=0):
-        ac = 10 + self.get_modifier(self.dex) + armor_modifier + self.temp_ac_bonus
+    def armor_class(self):
+        ac = 10 + self.get_modifier(self.dex) + self.armor_modifier + self.temp_ac_bonus
         self.temp_ac_bonus = 0
         return ac
-    
+
+
 class Fighter(Entity):
     def __init__(self, name, level):
         abilities = ["charge", "guard", "strike", "heavy strike"]
@@ -64,7 +65,8 @@ class Fighter(Entity):
             12,
             8,
             10,
-            10
+            10,
+            abilities
         )
 
 
@@ -79,7 +81,8 @@ class Wizard(Entity):
             12,
             16,
             12,
-            10
+            10,
+            abilities
         )
 
 class Monk(Entity):
@@ -93,7 +96,8 @@ class Monk(Entity):
             16,
             8,
             14,
-            10
+            10,
+            abilities
         )
 
 
@@ -108,7 +112,8 @@ class Ranger(Entity):
             16,
             10,
             13,
-            9
+            9,
+            abilities
         )
 
 class Warlock(Entity):
@@ -122,5 +127,6 @@ class Warlock(Entity):
             12,
             10,
             10,
-            16
+            16,
+            abilities
         )
