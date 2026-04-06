@@ -1,5 +1,0 @@
-whole:
-    add enemies
-    add combat
-    add health
-    refactor everything
