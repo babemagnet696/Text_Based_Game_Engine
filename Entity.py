@@ -30,7 +30,9 @@ class Entity:
         self.armor_modifier = 0
 
     def is_alive(self):
-        return self.current_hp > 0
+        if self.current_hp > 0:
+            return True
+        return False
     
     def get_modifier(self, skill):
         return (skill - 10) // 2
@@ -38,7 +40,7 @@ class Entity:
     def take_damage(self, damage):
         self.current_hp -= damage
         print(f"{self.name} took {damage} damage!")
-        if self.is_alive() is True:
+        if self.is_alive() is False:
             self.current_hp = 0
     
     def heal(self, amount):
@@ -52,81 +54,3 @@ class Entity:
         ac = 10 + self.get_modifier(self.dex) + self.armor_modifier + self.temp_ac_bonus
         self.temp_ac_bonus = 0
         return ac
-
-
-class Fighter(Entity):
-    def __init__(self, name, level):
-        abilities = ["charge", "guard", "strike", "heavy strike"]
-        super().__init__(
-            name,
-            level,
-            14,
-            16,
-            12,
-            8,
-            10,
-            10,
-            abilities
-        )
-
-
-class Wizard(Entity):
-    def __init__(self, name, level):
-        abilities = ["fireball", "magic missle", "focus", "curse"]
-        super().__init__(
-            name,
-            level,
-            10,
-            8,
-            12,
-            16,
-            12,
-            10,
-            abilities
-        )
-
-class Monk(Entity):
-    def __init__(self, name, level):
-        abilities = "flurry of blows", "agile strike", "focus", "palm strike"
-        super().__init__(
-            name,
-            level,
-            12,
-            12,
-            16,
-            8,
-            14,
-            10,
-            abilities
-        )
-
-
-class Ranger(Entity):
-    def __init__(self, name, level):
-        abilities = ["stab", "quick shot", "hunters mark", "double shot"]
-        super().__init__(
-            name,
-            level,
-            12,
-            10,
-            16,
-            10,
-            13,
-            9,
-            abilities
-        )
-
-class Warlock(Entity):
-    def __init__(self, name, level):
-        abilities = ["eldritch blash", "hex", "life drain", "dark surge"]
-        super().__init__(
-            name,
-            level,
-            12,
-            8,
-            12,
-            10,
-            10,
-            16,
-            abilities
-        )

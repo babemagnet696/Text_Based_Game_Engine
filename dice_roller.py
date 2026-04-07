@@ -25,11 +25,9 @@ class d20(DiceRoller):
         
 
         if total in range((20-self.modifier), 21):
-            print("Critical Success!")
             return (True, total)
         
         elif total == 1:
-            print("Critical Fail!")
             return (True, total)
         
         total += self.bonus
@@ -42,11 +40,11 @@ class d20(DiceRoller):
         
 
         if num_chosen in range((20-self.modifier), 21):
-            print(f"Advantage: {roll1} vs {roll2} → Critical Success!")
+            print(f"Advantage: {roll1} vs {roll2}")
             return (True, num_chosen)
         
         elif num_chosen == 1:
-            print(f"Advantage: {roll1} vs {roll2} → Critical Fail!")
+            print(f"Advantage: {roll1} vs {roll2}")
             return (True, num_chosen)
         
         num_chosen += self.bonus
@@ -61,11 +59,11 @@ class d20(DiceRoller):
         
 
         if num_chosen in range((20-self.modifier), 21):
-            print(f"Disadvantage: {roll1} vs {roll2} → Critical Success!")
+            print(f"Disadvantage: {roll1} vs {roll2}")
             return (True, num_chosen)
         
         elif num_chosen == 1:
-            print(f"Disadvantage: {roll1} vs {roll2} → Critical Fail!")
+            print(f"Disadvantage: {roll1} vs {roll2}")
             return (True, num_chosen)
         
         num_chosen += self.bonus

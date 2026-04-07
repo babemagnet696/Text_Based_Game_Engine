@@ -1,5 +1,21 @@
 from abilities import Ability
 from dice_roller import *
+from Entity import Entity
+
+class Fighter(Entity):
+    def __init__(self, name, level):
+        abilities = [heavy_strike]
+        super().__init__(
+            name,
+            level,
+            14,
+            16,
+            12,
+            8,
+            10,
+            10,
+            abilities
+        )
 
 heavy_strike = Ability(
     name="Heavy Strike",

@@ -11,9 +11,17 @@ class Ability:
         self.current_cd = 0
         self.roll_modifier = roll_modifier
         
-    def use_ability(self):
+    def execute(self, roll):
+        nat, val = roll
+
         dice = self.dice_class(self.num_of_dice)
         damage = self.base_damage + dice.roll_dice()
+        
+        if nat and val == 20:
+            # critical hit
+            # roll and add dice again
+            damage += dice.roll_dice()
+        
         self.current_cd = self.cooldown
         return damage
     
