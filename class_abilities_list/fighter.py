@@ -1,4 +1,4 @@
-from abilities import Ability
+from class_abilities_list.abilities import Ability
 from dice_roller import *
 from Entity import Entity
 

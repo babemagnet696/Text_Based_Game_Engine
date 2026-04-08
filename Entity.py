@@ -1,5 +1,5 @@
 import math
-from abilities import Ability, StatusEffect
+from class_abilities_list.abilities import Ability
 
 class Entity:
     def __init__(self, name, level, constitution, strength, dexterity, intelligence, wisdom, charisma, weapon=None, advantage=False, disadvantage=False, abilities=None):
@@ -28,6 +28,7 @@ class Entity:
         self.disadvantage = disadvantage
         self.abilities = abilities or []
         self.armor_modifier = 0
+        self.active_effects = []
 
     def is_alive(self):
         if self.current_hp > 0:

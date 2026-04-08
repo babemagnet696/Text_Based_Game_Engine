@@ -1,7 +1,7 @@
 from dice_roller import *
 
 class Ability:
-    def __init__(self, name, dice_class, num_of_dice, base_damage, cooldown, can_miss=True, roll_modifier=0):
+    def __init__(self, name, dice_class, num_of_dice, base_damage, cooldown, can_miss=True, roll_modifier=0, status_effect=None, self_target=False):
         self.name = name
         self.dice_class = dice_class
         self.num_of_dice = num_of_dice
@@ -10,8 +10,13 @@ class Ability:
         self.can_miss = can_miss
         self.current_cd = 0
         self.roll_modifier = roll_modifier
+        self.status_effect = status_effect
+        self.self_target = self_target
         
     def execute(self, roll):
+
+        if self.status_effect is not None:
+            pass
         nat, val = roll
         dice = self.dice_class(1)
         damage = self.base_damage + dice.roll_dice()
@@ -26,6 +31,12 @@ class Ability:
     
     def check_cooldown(self):
         return self.current_cd == 0
+    
+    def apply_status_effect(self, target):
+        if not self.self_target:
+            if self.status_effect.saving_throw(target):
+                return
+        self.status_effect.apply(target)
     
     def attack_roll(self, modifier, disadvantage=False, advantage=False, crit_modifier=0):
         die = d20(bonus=(self.roll_modifier + modifier), crit_chance_modifier=crit_modifier)
@@ -48,11 +59,3 @@ class Ability:
 
         return dice_roll
         
-
-
-class StatusEffect:
-    def __init__ (self, cooldown, duration, base_damage=0):
-        self.cooldown = cooldown
-        self.duration = duration
-        self.base_damage = base_damage
-        self.current_cd = 0
