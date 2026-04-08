@@ -2,9 +2,17 @@ from abilities import Ability
 from dice_roller import *
 from Entity import Entity
 
+eldritch_blast = Ability(
+    name="Eldritch Blast",
+    dice_class=d10,
+    num_of_dice=2,
+    base_damage=4,
+    cooldown=1,
+)
+
 class Warlock(Entity):
     def __init__(self, name, level):
-        abilities = [eldritch_blast]
+        a_abilities = [eldritch_blast]
         super().__init__(
             name,
             level,
@@ -14,13 +22,6 @@ class Warlock(Entity):
             10,
             10,
             16,
-            abilities
+            abilities=a_abilities
         )
 
-eldritch_blast = Ability(
-    name="Eldritch Blast",
-    dice_class=d10,
-    num_of_dice=2,
-    base_damage=4,
-    cooldown=1,
-)

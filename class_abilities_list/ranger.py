@@ -2,9 +2,18 @@ from abilities import Ability
 from dice_roller import *
 from Entity import Entity
 
+quick_shot = Ability(
+    name="Quick Shot",
+    dice_class=d8,
+    num_of_dice=1,
+    base_damage=0,
+    cooldown=0,
+    roll_modifier=3
+)
+
 class Ranger(Entity):
     def __init__(self, name, level):
-        abilities = [quick_shot]
+        a_abilities = [quick_shot]
         super().__init__(
             name,
             level,
@@ -14,15 +23,7 @@ class Ranger(Entity):
             10,
             13,
             9,
-            abilities
+            abilities=a_abilities
         )
 
 
-quick_shot = Ability(
-    name="Quick Shot",
-    dice_class=d8,
-    num_of_dice=1,
-    base_damage=0,
-    cooldown=0,
-    roll_modifier=3
-)

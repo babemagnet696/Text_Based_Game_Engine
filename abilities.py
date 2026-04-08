@@ -13,8 +13,7 @@ class Ability:
         
     def execute(self, roll):
         nat, val = roll
-
-        dice = self.dice_class(self.num_of_dice)
+        dice = self.dice_class(1)
         damage = self.base_damage + dice.roll_dice()
         
         if nat and val == 20:
@@ -22,7 +21,7 @@ class Ability:
             # roll and add dice again
             damage += dice.roll_dice()
         
-        self.current_cd = self.cooldown
+        # self.current_cd = self.cooldown
         return damage
     
     def check_cooldown(self):

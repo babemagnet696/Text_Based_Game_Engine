@@ -39,7 +39,6 @@ class Entity:
     
     def take_damage(self, damage):
         self.current_hp -= damage
-        print(f"{self.name} took {damage} damage!")
         if self.is_alive() is False:
             self.current_hp = 0
     

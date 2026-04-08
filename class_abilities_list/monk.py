@@ -2,9 +2,17 @@ from abilities import Ability
 from dice_roller import *
 from Entity import Entity
 
+flurry_of_blows = Ability(
+    name="Flurry of Blows",
+    dice_class=d4,
+    num_of_dice=3,
+    base_damage=0,
+    cooldown=2,
+)
+
 class Monk(Entity):
     def __init__(self, name, level):
-        abilities = [flurry_of_blows]
+        a_abilities = [flurry_of_blows]
         super().__init__(
             name,
             level,
@@ -14,13 +22,6 @@ class Monk(Entity):
             8,
             14,
             10,
-            abilities
+            abilities=a_abilities
         )
 
-flurry_of_blows = Ability(
-    name="Flurry of Blows",
-    dice_class=d4,
-    num_of_dice=3,
-    base_damage=4,
-    cooldown=2,
-)
