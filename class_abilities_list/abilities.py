@@ -1,7 +1,11 @@
 from dice_roller import *
 
 class Ability:
-    def __init__(self, name, dice_class, num_of_dice, base_damage, cooldown, can_miss=True, roll_modifier=0, status_effect=None, self_target=False):
+    def __init__(self, name, dice_class, num_of_dice, base_damage, 
+                 cooldown, can_miss=True, roll_modifier=0, 
+                 status_effect=False, self_effect=None, 
+                 target_effect=None):
+        
         self.name = name
         self.dice_class = dice_class
         self.num_of_dice = num_of_dice
@@ -11,12 +15,14 @@ class Ability:
         self.current_cd = 0
         self.roll_modifier = roll_modifier
         self.status_effect = status_effect
-        self.self_target = self_target
+        self.self_effect = self_effect
+        self.target_effect = target_effect
         
     def execute(self, roll):
-
-        if self.status_effect is not None:
-            pass
+        if self.dice_class is None:
+            if self.base_damage != 0:
+                return self.base_damage
+            
         nat, val = roll
         dice = self.dice_class(1)
         damage = self.base_damage + dice.roll_dice()
@@ -33,10 +39,13 @@ class Ability:
         return self.current_cd == 0
     
     def apply_status_effect(self, target):
-        if not self.self_target:
-            if self.status_effect.saving_throw(target):
+        if self.target_effect is not None:
+            if self.target_effect.saving_throw(target):
+                self.target_effect.apply(target)
                 return
-        self.status_effect.apply(target)
+            print("Saving throw successfull!")
+        else:
+            self.self_effect.apply(target)
     
     def attack_roll(self, modifier, disadvantage=False, advantage=False, crit_modifier=0):
         die = d20(bonus=(self.roll_modifier + modifier), crit_chance_modifier=crit_modifier)
@@ -58,4 +67,7 @@ class Ability:
             dice_roll = die.roll_dice()
 
         return dice_roll
+    
+    def on_hit(self, attacker, defender, damage):
+        pass
         

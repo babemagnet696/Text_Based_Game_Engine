@@ -5,17 +5,29 @@ class StatusEffect:
         self.name = name
         self.duration = duration
         self.current_duration=0
-        self.dc =dc
+        self.dc = dc
         self.save_stat = save_stat
 
     def apply(self, entity):
-        pass
+        existing = self.is_active(entity)
+        if existing:
+            existing.current_duration += self.duration
+            return
+        self.current_duration = self.duration
+        entity.active_effects.append(self)
 
     def on_turn(self, entity):
-        pass
+        if self.current_duration > 0:
+            self.current_duration -= 1
 
     def is_expired(self):
         return self.current_duration <=0
+    
+    def is_active(self, entity):
+        for effect in entity.active_effects:
+            if effect.name == self.name:
+                return effect
+        return None
     
     def on_expire(self, entity):
         pass

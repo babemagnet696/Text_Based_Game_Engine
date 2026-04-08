@@ -2,7 +2,11 @@ import math
 from class_abilities_list.abilities import Ability
 
 class Entity:
-    def __init__(self, name, level, constitution, strength, dexterity, intelligence, wisdom, charisma, weapon=None, advantage=False, disadvantage=False, abilities=None):
+    def __init__(self, name, level, constitution, strength, 
+                 dexterity, intelligence, wisdom, charisma, 
+                 weapon=None, advantage=False, disadvantage=False, 
+                 abilities=None):
+        
         self.name = name
         self.level = level
         base_health = 20
@@ -47,7 +51,7 @@ class Entity:
         self.current_hp += amount
         if self.current_hp > self.max_hp:
             self.current_hp = self.max_hp
-        print(f"{self.name} healed for {amount}: current hp is {self.current_hp}")
+        print(f"{self.name} healed for {amount}!")
     
     # Armor and skill dependent
     def armor_class(self):

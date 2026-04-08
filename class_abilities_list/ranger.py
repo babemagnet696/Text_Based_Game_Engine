@@ -18,7 +18,8 @@ stab = Ability(
     num_of_dice=1,
     base_damage=1,
     cooldown=2,
-    status_effect=Bleed()
+    status_effect=True,
+    target_effect=Bleed()
 )
 
 class Ranger(Entity):

@@ -6,12 +6,7 @@ class Bleed(StatusEffect):
         self.dmg_per_turn = 3
 
     def apply(self, entity):
-        for effect in entity.active_effects:
-            if effect.name == self.name:
-                self.current_duration += self.duration
-                return
-        self.current_duration += self.duration
-        entity.active_effects.append(self)
+        super().apply(entity)
         print(f"{entity.name} is bleeding!")
 
     def on_turn(self, entity):

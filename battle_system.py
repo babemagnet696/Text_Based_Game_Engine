@@ -20,27 +20,12 @@ def battle(player, enemy):
         print(f"{player.name} current health is: {player.current_hp}")
         print(f"{enemy.name} current health is: {enemy.current_hp}")
 
-        
-        decrease_cooldowns(player)
-        p_action = player_get_ability(player)
-        os.system('cls' if os.name == 'nt' else 'clear')
-        print(f"{player.name} used {p_action.name}!")
-        if p_action.self_target:
-            p_action.apply_status_effect(player)
-        else:
-            roll_check(p_action, enemy)
-
+        player_turn(player, enemy)
+            
         time.sleep(2)
-        print("\n\n")
 
         if enemy.is_alive():
-            os.system('cls' if os.name == 'nt' else 'clear')
-            decrease_cooldowns(enemy)
-            e_action = enemy_get_ability(enemy)
-            print(f"{enemy.name} used {e_action.name}!")
-            roll_check(e_action, player)
-            time.sleep(2)
-            os.system('cls' if os.name == 'nt' else 'clear')
+            enemy_turn(player, enemy)
 
     os.system('cls' if os.name == 'nt' else 'clear')
     if player.is_alive():
@@ -68,40 +53,108 @@ def enemy_get_ability(entity):
     available = [a for a in entity.abilities if a.check_cooldown()]
     return r.choice(available)
 
-def roll_check(action, d_entity):
+def roll_check(action, attacker, defender):
+    
     for _ in range(action.num_of_dice):
-        attack_roll = action.attack_roll(modifier=0)
-        nat, roll_val = attack_roll
 
+        attack_roll = action.attack_roll(modifier=0, disadvantage=attacker.disadvantage, advantage=attacker.advantage)
+        nat, roll_val = attack_roll
 
         if nat and roll_val == 1:
                 print(f"Critical miss!")
 
-        elif roll_val >= d_entity.armor_class():
-            if action.status_effect is not None:
-                action.apply_status_effect(d_entity)
+        elif roll_val >= defender.armor_class():
+
+            if action.status_effect:
+                if action.target_effect is not None:
+                    action.apply_status_effect(defender)
+
             damage = action.execute(attack_roll)
-            d_entity.take_damage(damage)
+            action.on_hit(attacker, defender, damage)
+            defender.take_damage(damage)
+
             if nat and roll_val == 20:
-                print(f"CRITICAL HIT! {d_entity.name} hit for {damage} damage!")
+                print(f"CRITICAL HIT! {defender.name} hit for {damage} damage!")
             else:
-                print(f"{d_entity.name} hit for {damage} damage!")
+                print(f"{defender.name} hit for {damage} damage!")
+
         else:
             print(f"Miss!")
+
+        if action.status_effect:
+            if action.self_effect is not None:
+                action.apply_status_effect(attacker)
+
+    if action.num_of_dice == 0:
+        no_dice(action, attacker, defender)
     
 def decrease_cooldowns(entity):
     for ability in entity.abilities:
         if ability.current_cd == 0:
             return
-        ability.current_cd -= 1
-        
+        ability.current_cd -= 1      
 
 def process_effects(entity):
     for effect in entity.active_effects[:]:
         effect.on_turn(entity)
         effect.on_expire(entity)
 
+def no_dice(action, attacker, defender):
+
+    if action.base_damage == 0:
+        if action.target_effect is not None:
+            action.apply_status_effect(defender)
+            return
+        action.apply_status_effect(attacker)
+        return
+
+    attack_roll = action.attack_roll(modifier=0)
+    nat, roll_val = attack_roll
+
+    if nat and roll_val == 1:
+            print(f"Critical miss!")
+
+    elif roll_val >= defender.armor_class():
+
+        if action.status_effect:
+            if action.target_effect is not None:
+                action.apply_status_effect(defender)
+
+        damage = action.base_damage
+
+        if nat and roll_val == 20:
+            damage += action.base_damage
+            print(f"CRITICAL HIT! {defender.name} hit for {damage} damage!")
+        else:
+            print(f"{defender.name} hit for {damage} damage!")
+        
+        action.on_hit(attacker, defender, damage)
+        defender.take_damage(damage)
+
+    else:
+        print(f"Miss!")
+    
+    if action.status_effect:
+        if action.self_effect is not None:
+            action.apply_status_effect(attacker)
+
+def player_turn(player, enemy):
+    decrease_cooldowns(player)
+    p_action = player_get_ability(player)
+    os.system('cls' if os.name == 'nt' else 'clear')
+    print(f"{player.name} used {p_action.name}!")
+    roll_check(p_action, player, enemy)
+
+def enemy_turn(player, enemy):
+    os.system('cls' if os.name == 'nt' else 'clear')
+    decrease_cooldowns(enemy)
+    e_action = enemy_get_ability(enemy)
+    print(f"{enemy.name} used {e_action.name}!")
+    roll_check(e_action, enemy, player)
+    time.sleep(2)
+    os.system('cls' if os.name == 'nt' else 'clear')
+
 if __name__ == "__main__":
-    fighter = Wizard("Tyson", 1)
+    fighter = Fighter("Tyson", 1)
     enemy = Ranger("Goblin", 1)
     battle(fighter, enemy)
