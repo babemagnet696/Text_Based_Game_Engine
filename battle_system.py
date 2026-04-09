@@ -98,7 +98,6 @@ def process_effects(entity):
     for effect in entity.active_effects[:]:
         effect.on_turn(entity)
         effect.on_expire(entity)
-        entity.surge_damage()
 
 def no_dice(action, attacker, defender):
 

@@ -45,9 +45,7 @@ class Entity:
         return (skill - 10) // 2
     
     def take_damage(self, damage):
-        print(f"this is old damage: {damage}")
         new_damage = self.dmg_debuff_calc(damage)
-        print(f"this is new damage: {new_damage}")
         self.current_hp -= new_damage
         if self.is_alive() is False:
             self.current_hp = 0
@@ -64,10 +62,7 @@ class Entity:
         self.temp_ac_bonus = 0
         return ac
     
-    def surge_damage(self):
-        if "Dark Surge" in self.active_effects:
-            print(f"{self.name} took 5 damage from Dark Surge!")
-            self.current_hp -= 5
+    
 
     def dmg_debuff_calc(self, damage):
         if self.temp_dmg_debuff == 0:

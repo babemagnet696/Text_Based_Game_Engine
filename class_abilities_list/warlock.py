@@ -2,7 +2,7 @@ from class_abilities_list.abilities import Ability
 from dice_roller import *
 from Entity import Entity
 from status_effects_list.dmg_debuff import Hex
-from status_effects_list.advantage import GainAdvantage
+from status_effects_list.advantage import DarkSurge
 
 class LifeDrainAbility(Ability):
     def on_hit(self, attacker, defender, damage):
@@ -41,7 +41,7 @@ dark_surge = Ability(
     base_damage=0,
     cooldown=3,
     status_effect=True,
-    self_effect=GainAdvantage()
+    self_effect=DarkSurge()
 )
 
 class Warlock(Entity):

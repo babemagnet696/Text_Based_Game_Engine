@@ -31,3 +31,11 @@ class GainDisadvantage(StatusEffect):
             entity.active_effects.remove(self)
             print(f"{entity.name} lost Disadvantage!")
             entity.disadvantage = False
+
+class DarkSurge(GainAdvantage):
+    def __init__(self):
+        super().__init__()
+
+    def on_turn(self, entity):
+        entity.current_hp -= 4
+        print(f"{entity.name} took 4 damage from Dark Surge!")

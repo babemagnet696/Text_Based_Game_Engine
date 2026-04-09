@@ -8,8 +8,8 @@ class DamageDebuffEffect(StatusEffect):
         self.apply_message = apply_message
         self.expire_message = expire_message
 
-    def on_apply(self, entity):
-        super().on_apply(entity)
+    def apply(self, entity):
+        super().apply(entity)
         entity.temp_dmg_debuff = self.debuff_amount
         self.current_duration = self.duration
         print(self.apply_message.format(entity=entity, effect=self))
