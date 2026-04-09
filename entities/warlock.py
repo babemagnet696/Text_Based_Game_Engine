@@ -1,8 +1,8 @@
-from class_abilities_list.abilities import Ability
+from .abilities import Ability
+from .entity import Entity
+from effects import Hex
+from effects import DarkSurge
 from dice_roller import *
-from Entity import Entity
-from status_effects_list.dmg_debuff import Hex
-from status_effects_list.advantage import DarkSurge
 
 class LifeDrainAbility(Ability):
     def on_hit(self, attacker, defender, damage):

@@ -1,6 +1,6 @@
 import os
 import random as r
-from class_abilities_list import Fighter, Wizard, Monk, Ranger, Warlock
+from entities import Fighter, Wizard, Monk, Ranger, Warlock
 import time
 
 

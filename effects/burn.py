@@ -1,4 +1,4 @@
-from status_effects_list.status_effect import StatusEffect
+from .status_effect import StatusEffect
 
 class Burn(StatusEffect):
     def __init__(self):

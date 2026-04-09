@@ -1,4 +1,4 @@
-from status_effects_list.status_effect import StatusEffect
+from .status_effect import StatusEffect
 
 class DamageDebuffEffect(StatusEffect):
     def __init__(self, name, duration, debuff_amount, dc=None, save_stat=None,

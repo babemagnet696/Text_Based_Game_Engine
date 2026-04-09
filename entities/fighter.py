@@ -1,8 +1,8 @@
-from class_abilities_list.abilities import Ability
-from status_effects_list.advantage import GainAdvantage, GainDisadvantage
-from status_effects_list.change_ac import GainAC
+from .abilities import Ability
+from .entity import Entity
+from effects import GainAdvantage, GainDisadvantage
+from effects import GainAC
 from dice_roller import *
-from Entity import Entity
 
 charge = Ability(
     name="Charge",

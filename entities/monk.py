@@ -1,8 +1,8 @@
-from class_abilities_list.abilities import Ability
+from .abilities import Ability
+from .entity import Entity
+from effects import GainAC
+from effects import GainAdvantage, GainDisadvantage
 from dice_roller import *
-from Entity import Entity
-from status_effects_list.change_ac import GainAC
-from status_effects_list.advantage import GainAdvantage, GainDisadvantage
 
 flurry_of_blows = Ability(
     name="Flurry of Blows",

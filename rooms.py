@@ -1,7 +1,17 @@
+from entities import Fighter, Wizard, Monk, Ranger, Warlock
+
 template = {
             "room_info": "",
             "game_over": False,
             "directional_info": {
+                "north": "",
+                "south": "",
+                "east": "",
+                "west": ""
+            },
+            "items": [],
+            "enemies": None,
+            "exits": {
                 "north": {
                     "room": None,
                     "locked": False,
@@ -23,13 +33,6 @@ template = {
                     "key": None
                 }
             },
-            "items": [],
-            "exits": {
-                "north": None,
-                "south": None,
-                "east": None,
-                "west": None
-            }
         }
 
 rooms = {
@@ -43,6 +46,7 @@ rooms = {
                 "west": "A cold, stone, moss covered wall, no way you're going that way"
             },
             "items":["test key"],
+            "enemies": None,
             "exits": {
                 "north": {
                     "room": "hallway",
@@ -78,6 +82,7 @@ rooms = {
                 "west": "A dark room covered in blood and in the middle is a single chair"
             },
             "items": [],
+            "enemies": None,
             "exits": {
                 "north": {
                     "room": None,
@@ -104,10 +109,38 @@ rooms = {
 
 
         "bloodied_room": {
-            "room_info": "The smell of iron and blood fills your nose. Bodies lay strewn across the walls and floor.\nIn the middle is a lone chair with chains to hold down the victim.\nYou feel something hit the back of your head\nYou don't wake back up",
-            "game_over": True,
-        },
-
+            "room_info": "The smell of iron and blood fills your nose. Bodies lay strewn across the walls and floor.\nIn the middle is a lone chair with chains to hold down the victim.\nYou are not alone...\nPrepare for battle!",
+            "directional_info": {
+                "north": "Nothing but a bloody wall",
+                "south": "Nothing but a bloody wall",
+                "east": "The brightly lit hallway",
+                "west": "There is a way down, I don't want to go that way\nThere is screaming"
+                },
+            },
+            "items": [],
+            "enemies": Fighter("Skeleton", 1),
+            "exits": {
+                "north": {
+                    "room": None,
+                    "locked": False,
+                    "key": None
+                },
+                "south": {
+                    "room": None,
+                    "locked": False,
+                    "key": None
+                },
+                "east": {
+                    "room": "Hallway",
+                    "locked": False,
+                    "key": None
+                },
+                "west": {
+                    "room": None,
+                    "locked": False,
+                    "key": None
+                }
+            },
 
 
         "escape": {

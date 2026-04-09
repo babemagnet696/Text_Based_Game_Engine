@@ -1,5 +1,3 @@
-import math
-from class_abilities_list.abilities import Ability
 import random as r
 
 class Entity:
@@ -35,6 +33,7 @@ class Entity:
         self.abilities = abilities or []
         self.armor_modifier = 0
         self.active_effects = []
+        self.inventory = []
 
     def is_alive(self):
         if self.current_hp > 0:

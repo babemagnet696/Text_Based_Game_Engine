@@ -1,5 +1,6 @@
 from items import items
 from parsing import normalize_argument
+from entities import Fighter, Wizard, Monk, Ranger, Warlock
 
 def get_name():
     name = str(input("What is your name: "))
@@ -7,8 +8,27 @@ def get_name():
         print(f"Max name length is 20\nPlease Try Again")
         return get_name()
     else:
-        print(f"Welcome to my game {name}")
         return name
+
+def print_classes(available_classes):
+    for i, role in enumerate(available_classes, 1):
+        print(f"{i}) {role.__name__}")
+
+def get_class():
+    classes = [Fighter, Wizard, Monk, Ranger, Warlock]
+
+    while True:
+        print_classes(classes)
+        choice = input("Choose your class: ")
+
+        if choice.isdigit():
+            if (1 <= int(choice) <= len(classes)):
+
+                selected_class = classes[int(choice)-1]
+                name = get_name()
+                player_class = selected_class(name, 1)
+                return player_class
+    
 
 
 def inspect_room(room_item_list, target=None):

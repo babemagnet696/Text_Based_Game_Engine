@@ -2,7 +2,7 @@ import os
 import time
 import copy
 from parsing import get_action
-from player import get_name, inspect_room, inspect_inventory, use_item, take_item
+from player import get_class, inspect_room, inspect_inventory, use_item, take_item
 from move import move, end_check, look_direction, help
 from items import items
 from rooms import rooms
@@ -13,13 +13,15 @@ max_inventory_size = 10
 def main():
     os.system('cls' if os.name == 'nt' else 'clear')
 
-    player_inventory = []
     runtime_rooms = copy.deepcopy(rooms)
     game_over = False
-    #name = get_name()
     current_room = "cell"
+    player = get_class()
+    player_inventory = player.inventory
+    time.sleep(2)
 
-    #time.sleep(2)    
+    os.system('cls' if os.name == 'nt' else 'clear')
+    print(f"Welcome to the dungeon {player.name} the {player.__class__.__name__}")
     print(f"You wake up in a dark room. It is cold and damp.")
     print(f"There is one way you can go: North out of your cell")
     print(f"\nType help if you are stuck")

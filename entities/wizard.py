@@ -1,9 +1,9 @@
-from class_abilities_list.abilities import Ability
+from .abilities import Ability
+from .entity import Entity
+from effects import Burn
+from effects import GainAdvantage
+from effects import LoseAC
 from dice_roller import *
-from Entity import Entity
-from status_effects_list.burn import Burn
-from status_effects_list.advantage import GainAdvantage
-from status_effects_list.change_ac import LoseAC
 
 firebolt = Ability(
     name="Firebolt",

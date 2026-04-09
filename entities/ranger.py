@@ -1,8 +1,8 @@
-from class_abilities_list.abilities import Ability
+from .abilities import Ability
+from .entity import Entity
+from effects import Bleed
+from effects import Mark
 from dice_roller import *
-from Entity import Entity
-from status_effects_list.bleed import Bleed
-from status_effects_list.dmg_debuff import Mark
 
 quick_shot = Ability(
     name="Quick Shot",
