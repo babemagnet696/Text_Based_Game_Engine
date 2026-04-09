@@ -98,6 +98,7 @@ def process_effects(entity):
     for effect in entity.active_effects[:]:
         effect.on_turn(entity)
         effect.on_expire(entity)
+        entity.surge_damage()
 
 def no_dice(action, attacker, defender):
 
@@ -155,6 +156,6 @@ def enemy_turn(player, enemy):
     os.system('cls' if os.name == 'nt' else 'clear')
 
 if __name__ == "__main__":
-    fighter = Fighter("Tyson", 1)
-    enemy = Ranger("Goblin", 1)
+    fighter = Warlock("Tyson", 1)
+    enemy = Monk("Goblin", 1)
     battle(fighter, enemy)

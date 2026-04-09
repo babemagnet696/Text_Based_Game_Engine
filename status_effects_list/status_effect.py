@@ -30,7 +30,8 @@ class StatusEffect:
         return None
     
     def on_expire(self, entity):
-        pass
+        if self.is_expired():
+            entity.active_effects.remove(self)
 
     def saving_throw(self, entity):
         if self.dc is not None:

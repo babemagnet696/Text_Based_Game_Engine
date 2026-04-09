@@ -1,5 +1,6 @@
 import math
 from class_abilities_list.abilities import Ability
+import random as r
 
 class Entity:
     def __init__(self, name, level, constitution, strength, 
@@ -28,6 +29,7 @@ class Entity:
         self.max_hp = base_health + (self.con * 3) + (self.level * 4)
         self.current_hp = self.max_hp
         self.temp_ac_bonus = 0
+        self.temp_dmg_debuff = 0
         self.advantage = advantage
         self.disadvantage = disadvantage
         self.abilities = abilities or []
@@ -43,7 +45,10 @@ class Entity:
         return (skill - 10) // 2
     
     def take_damage(self, damage):
-        self.current_hp -= damage
+        print(f"this is old damage: {damage}")
+        new_damage = self.dmg_debuff_calc(damage)
+        print(f"this is new damage: {new_damage}")
+        self.current_hp -= new_damage
         if self.is_alive() is False:
             self.current_hp = 0
     
@@ -58,3 +63,16 @@ class Entity:
         ac = 10 + self.get_modifier(self.dex) + self.armor_modifier + self.temp_ac_bonus
         self.temp_ac_bonus = 0
         return ac
+    
+    def surge_damage(self):
+        if "Dark Surge" in self.active_effects:
+            print(f"{self.name} took 5 damage from Dark Surge!")
+            self.current_hp -= 5
+
+    def dmg_debuff_calc(self, damage):
+        if self.temp_dmg_debuff == 0:
+            return damage
+        extra_dmg_taken = r.randrange(1, self.temp_dmg_debuff+1)
+        new_damage = damage + extra_dmg_taken
+        print(f"{self.name} took an extra {extra_dmg_taken} damage!")
+        return new_damage
