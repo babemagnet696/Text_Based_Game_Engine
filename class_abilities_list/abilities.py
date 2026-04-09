@@ -32,7 +32,6 @@ class Ability:
             # roll and add dice again
             damage += dice.roll_dice()
         
-        # self.current_cd = self.cooldown
         return damage
     
     def check_cooldown(self):
@@ -41,7 +40,7 @@ class Ability:
     def apply_status_effect(self, target):
         if self.target_effect is not None:
             if self.target_effect.saving_throw(target):
-                print("The effect has been applied")
+                
                 self.target_effect.apply(target)
                 return
             print("Saving throw successfull!")

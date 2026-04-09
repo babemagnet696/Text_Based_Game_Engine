@@ -36,18 +36,28 @@ def battle(player, enemy):
         return False
 
 def player_get_ability(entity):
-    available = [a for a in entity.abilities if a.check_cooldown()]
 
     for i, ability in enumerate(entity.abilities, 1):
-        
-        print(f"{i}. {ability.name.title()}")
+        if ability.check_cooldown():
+            print(f"{i}. {ability.name.title()}")
+        else:
+            print(f"{i}. {ability.name.title()} Cooldown: {ability.current_cd}")
+
 
     choice = input("\nChoose an ability: ")
 
-    if not choice.isdigit() or not (1 <= int(choice) <= len(available)):
+    if not choice.isdigit() or not (1 <= int(choice) <= len(entity.abilities)):
         return player_get_ability(entity)
     
-    return available[int(choice) - 1]
+    ability = entity.abilities[int(choice) - 1]
+    
+    if not ability.check_cooldown():
+        os.system('cls' if os.name == 'nt' else 'clear')
+        print(f"{ability.name} not ready yet")
+        return player_get_ability(entity)
+    
+    ability.current_cd = ability.cooldown
+    return ability
 
 def enemy_get_ability(entity):
     available = [a for a in entity.abilities if a.check_cooldown()]
@@ -91,7 +101,7 @@ def roll_check(action, attacker, defender):
 def decrease_cooldowns(entity):
     for ability in entity.abilities:
         if ability.current_cd == 0:
-            return
+            continue
         ability.current_cd -= 1      
 
 def process_effects(entity):
@@ -155,6 +165,6 @@ def enemy_turn(player, enemy):
     os.system('cls' if os.name == 'nt' else 'clear')
 
 if __name__ == "__main__":
-    fighter = Warlock("Tyson", 1)
-    enemy = Monk("Goblin", 1)
+    fighter = Wizard("Tyson", 1)
+    enemy = Fighter("Goblin", 1)
     battle(fighter, enemy)

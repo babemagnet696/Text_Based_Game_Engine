@@ -19,7 +19,7 @@ class GainAC(StatusEffect):
             
 class LoseAC(StatusEffect):
     def __init__(self):
-        super().__init__("Lose AC", duration=3, dc=10, save_stat=int)
+        super().__init__("Lose AC", duration=3, dc=10, save_stat="int")
     
     def apply(self, entity):
         super().apply(entity)
