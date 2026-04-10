@@ -39,7 +39,8 @@ def move(runtime_rooms, current_room, direction=None):
         print(runtime_rooms[new_room]["room_info"])
         return new_room
     
-    except ValueError(f"Room {path["room"]} does not exist")
+    except: 
+        ValueError(f"Room {path["room"]} does not exist")
 
 
 

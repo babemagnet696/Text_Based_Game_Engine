@@ -44,7 +44,7 @@ def main():
         if command in ["go", "move"]:
             direction = args[0]
             current_room = move(runtime_rooms, current_room, direction)
-            enemy = runtime_rooms[current_room]["enemies"]
+            enemies = runtime_rooms[current_room]["enemies"]
             game_over = end_check(runtime_rooms, current_room)
             
 
@@ -74,9 +74,18 @@ def main():
         elif command == "take":
             take_item(runtime_rooms, current_room, player_inventory, args[0])
 
-        if enemy is not None:
+        if enemies:
             time.sleep(3)
+            enemy = enemies[0]
             battle(player, enemy)
+
+            if player.is_alive() and not enemy.is_alive():
+                enemies.remove(enemy)
+                time.sleep(2)
+
+            if not player.is_alive():
+                break
+
             
         
         if game_over is True:

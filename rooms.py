@@ -118,7 +118,7 @@ rooms = {
                 "west": "There is a way down, I don't want to go that way\nThere is screaming"
                 },
             "items": [],
-            "enemies": Fighter("Skeleton", 1),
+            "enemies": [Fighter("Skeleton", 1)],
             "exits": {
                 "north": {
                     "room": None,
