@@ -58,7 +58,6 @@ class Entity:
     # Armor and skill dependent
     def armor_class(self):
         ac = 10 + self.get_modifier(self.dex) + self.armor_modifier + self.temp_ac_bonus
-        self.temp_ac_bonus = 0
         return ac
     
     
