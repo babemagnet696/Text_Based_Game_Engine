@@ -26,9 +26,11 @@ def move(runtime_rooms, current_room, direction=None):
             return move(runtime_rooms, current_room, new_direction)
         
         path = runtime_rooms[current_room]["exits"][direction]
+
         if path["room"] is None:
             print(f"\nYou cannot go {direction.title()}, the path is blocked")
             return current_room
+        
         if path["locked"] is True:
             print(f"The way to {path["room"]} is blocked by a locked door")
             return current_room
