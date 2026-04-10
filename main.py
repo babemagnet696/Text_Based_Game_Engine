@@ -6,6 +6,7 @@ from player import get_class, inspect_room, inspect_inventory, use_item, take_it
 from move import move, end_check, look_direction, help
 from items import items
 from rooms import rooms
+from battle_system import battle
 
 
 max_inventory_size = 10
@@ -43,6 +44,7 @@ def main():
         if command in ["go", "move"]:
             direction = args[0]
             current_room = move(runtime_rooms, current_room, direction)
+            enemy = runtime_rooms[current_room]["enemies"]
             game_over = end_check(runtime_rooms, current_room)
             
 
@@ -71,6 +73,10 @@ def main():
         
         elif command == "take":
             take_item(runtime_rooms, current_room, player_inventory, args[0])
+
+        if enemy is not None:
+            time.sleep(3)
+            battle(player, enemy)
             
         
         if game_over is True:

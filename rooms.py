@@ -110,13 +110,13 @@ rooms = {
 
         "bloodied_room": {
             "room_info": "The smell of iron and blood fills your nose. Bodies lay strewn across the walls and floor.\nIn the middle is a lone chair with chains to hold down the victim.\nYou are not alone...\nPrepare for battle!",
+            "game_over": False,
             "directional_info": {
                 "north": "Nothing but a bloody wall",
                 "south": "Nothing but a bloody wall",
                 "east": "The brightly lit hallway",
                 "west": "There is a way down, I don't want to go that way\nThere is screaming"
                 },
-            },
             "items": [],
             "enemies": Fighter("Skeleton", 1),
             "exits": {
@@ -131,7 +131,7 @@ rooms = {
                     "key": None
                 },
                 "east": {
-                    "room": "Hallway",
+                    "room": "hallway",
                     "locked": False,
                     "key": None
                 },
@@ -141,6 +141,7 @@ rooms = {
                     "key": None
                 }
             },
+        },
 
 
         "escape": {

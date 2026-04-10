@@ -18,23 +18,26 @@ def end_check(runtime_rooms, current_room):
     return False
 
 def move(runtime_rooms, current_room, direction=None):
+    try:
 
-    if direction not in runtime_rooms[current_room]["exits"]:
-        print(f"\n{direction} is not a valid direction.\nPlease type North, South, East, or West")
-        new_direction = get_direction_arguments()[0]
-        return move(runtime_rooms, current_room, new_direction)
+        if direction not in runtime_rooms[current_room]["exits"]:
+            print(f"\n{direction} is not a valid direction.\nPlease type North, South, East, or West")
+            new_direction = get_direction_arguments()[0]
+            return move(runtime_rooms, current_room, new_direction)
+        
+        path = runtime_rooms[current_room]["exits"][direction]
+        if path["room"] is None:
+            print(f"\nYou cannot go {direction.title()}, the path is blocked")
+            return current_room
+        if path["locked"] is True:
+            print(f"The way to {path["room"]} is blocked by a locked door")
+            return current_room
+        
+        new_room = path["room"]
+        print(runtime_rooms[new_room]["room_info"])
+        return new_room
     
-    path = runtime_rooms[current_room]["exits"][direction]
-    if path["room"] is None:
-        print(f"\nYou cannot go {direction.title()}, the path is blocked")
-        return current_room
-    if path["locked"] is True:
-        print(f"The way to {path["room"]} is blocked by a locked door")
-        return current_room
-    
-    new_room = path["room"]
-    print(runtime_rooms[new_room]["room_info"])
-    return new_room
+    except ValueError(f"Room {path["room"]} does not exist")
 
 
 
