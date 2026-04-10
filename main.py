@@ -85,8 +85,6 @@ def main():
 
             if not player.is_alive():
                 break
-
-            
         
         if game_over is True:
             break

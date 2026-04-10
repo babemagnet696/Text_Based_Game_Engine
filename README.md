@@ -2,7 +2,7 @@
 
 # About
 
-This was my first personal project. It origially started put as a text based game only, but quickly became an engine. It is nowhere near complete but it is close enough to build a basic concept of a game with. I plan to add more features in the future. It took me two weeks to get where it is now.
+This was my first personal project. It originally started out as a text based game only, but quickly became an engine. It is nowhere near complete but it is close enough to build a basic concept of a game with. I plan to add more features in the future. It took me two weeks to get where it is now.
 
 ### Tools
 
@@ -10,13 +10,13 @@ This was my first personal project. It origially started put as a text based gam
 
 ### Challenges
 
-The hardest part was keeping track of where everything was in the beginning. If I made a few changes one might break a few things. To combat this I made smaller and smaller functions and a lot of safeguards to prevent crashes. This worked for awhile until I made the battle system. Classes had abilities, and abilites had status effects, and both abilities and status effects affected an Entity.
+The hardest part was keeping track of where everything was in the beginning. If I made a few changes one might break a few things. To combat this I made smaller and smaller functions and a lot of safeguards to prevent crashes. This worked for awhile until I made the battle system. Classes had abilities, and abilities had status effects, and both abilities and status effects affected an Entity.
 
-An unexpected difficulty I had was keeping the folder clean and neat. As well as naming things. That was defenitly a constant battle.
+An unexpected difficulty I had was keeping the folder clean and neat. As well as naming things. That was definitely a constant battle.
 
 ### What I Learned
 
-Start simple and build up. Don't get any big ideas right away. That was my mistake and once I saw each function as it's own goal it became easier to write. Of course I had an overall idea but I had to break it into pieces. I couldn't start with a whole battle system and movement system in one swoop. Many more bugs would have been introduced that way.
+Start simple and build up. Don't get any big ideas right away. That was my mistake and once I saw each function as its own goal it became easier to write. Of course I had an overall idea but I had to break it into pieces. I couldn't start with a whole battle system and movement system in one swoop. Many more bugs would have been introduced that way.
 
 Keeping the scope of work small allowed me to get a better understanding of each file and what it contained. When a bug happened I could quickly narrow down where it was without a stack trace.
 
@@ -42,7 +42,7 @@ def get_use_arguments(arg=None):
 
 ### User input parsing, normalization, and validation
 
-When not in batte, the player can move, take, look, and inspect (room, inventory) giving them a full imersive view of their enviroment. Bad inputs lead to asking again. There is also an option to cancel inputs as well by typing cancel.
+When not in battle, the player can move, take, look, and inspect (room, inventory) giving them a full immersive view of their environment. Bad inputs lead to asking again. There is also an option to cancel inputs as well by typing cancel.
 
 ```py
 def get_action():
@@ -139,7 +139,7 @@ class DiceRoller:
 
 ### Hit chance and saving throws
 
-This one was fun to make. Every class has AC based on their dex and eventually armor (maybe feats later on who knows). d20 checks agains their ac using an attack roll. Certain attacks that have status effects roll again for a saving throw with the effects own difficulty class. There is also advantage and disadvantage that takes the higher or lower of two dice rolls. Some attacks can't miss such as magic missle. To do that I added a can_miss=bool for the ability.
+This one was fun to make. Every class has AC based on their dex and eventually armor (maybe feats later on who knows). d20 checks against their ac using an attack roll. Certain attacks that have status effects roll again for a saving throw with the effects own difficulty class. There is also advantage and disadvantage that takes the higher or lower of two dice rolls. Some attacks can't miss such as magic missile. To do that I added a can_miss=bool for the ability.
 
 ```py
  def saving_throw(self, entity):
@@ -177,7 +177,7 @@ def attack_roll(self, modifier, disadvantage=False, advantage=False, crit_modifi
 
 ### Abilities and Status Effects
 
-Every class has at least 4 abilities and some with status effects. Some deal damage to the enemy, some only apply a status effect to the enemy, some just apply a status affect to the caster.
+Every class has at least 4 abilities and some with status effects. Some deal damage to the enemy, some only apply a status effect to the enemy, some just apply a status effect to the caster.
 
 ```py
 hex = Ability(
@@ -215,7 +215,7 @@ quick_shot = Ability(
 
 # Getting Started
 
-### Prerequisits
+### Prerequisites
 
 The latest version of python3 must be installed to run:
 
@@ -241,7 +241,7 @@ cd Text_Based_Game_Engine
 python3 main.py
 ```
 
-4. You can use the rooms templete and move, player functions to make your own game!
+4. You can use the rooms template and move, player functions to make your own game!
 
 
 
